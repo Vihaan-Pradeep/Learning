@@ -1,0 +1,36 @@
+import tkinter as tk
+import winsound
+from playsound import playsound
+def play_sound():
+        playsound("Kick.mp3")
+max_time = 5
+root = tk.Tk()
+root.title("Pomodoro")
+root.configure(background="white")
+window_width = 500
+window_height = 500
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+
+x = (screen_width - window_width) // 2
+y = (screen_height - window_height) // 2
+
+root.geometry(f"{window_width}x{window_height}+{x}+{y}")
+
+label1 = tk.Label(root,text = f"{max_time}")
+label1.pack()
+label1.config(font = ("Helvetica",48))
+
+
+def start_timer(time):
+    if time >= 0:
+        label1.config(text = f"{time}")
+        root.after(1000, lambda: start_timer(time - 1))
+    else:
+            play_sound()
+            label1.config(text="BREAK TIME!")
+btn = tk.Button(root, text = 'Click me !', command = lambda: start_timer(max_time))
+btn.pack(side = 'bottom')
+root.mainloop()
+
+
